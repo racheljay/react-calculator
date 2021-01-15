@@ -16,4 +16,10 @@
     
 
 ### What shows up in the view window?
-- a div that will show the current state of the 
+- a div that will show the current state of the current number display
+
+### Function for getting numbers in the display window
+- Display shows currentNumberState
+- funciton updateNumber(numState) {
+    if(numstate == 0)
+}
