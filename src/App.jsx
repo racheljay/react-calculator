@@ -12,6 +12,8 @@ function App() {
   const [previousNumber, setPreviousNumber] = useState("0");
   const [screenRefresh, setScreenRefresh] = useState(false);
   const [memUpdated, setMemUpdated] = useState(false);
+  const [operator, setOperator] = useState('');
+  const [answer, setAnswer] = useState('')
 
   useEffect(() => {
     // console.log('did mount')
@@ -26,8 +28,6 @@ function App() {
       setDisplayArr([num])
       setScreenRefresh(false);
     } else if (!screenRefresh) {
-
-
       let arr = displayArr
 
       if (arr[0] === 0) {
@@ -40,56 +40,80 @@ function App() {
 
       console.log('current display type', typeof currentDisplay)
       console.log(screenRefresh)
+      
+      doMath(operator)
+      
     }
+
 
   }
 
-
-
-  const operatorAction = (btn) => {
-    console.log(btn)
-    setPreviousNumber(currentDisplay)
-    setMemUpdated(true);
-    setScreenRefresh(true);
-
-
-    // let x = parseInt(previousNumber);
-    // let y = parseInt(currentDisplay);
-
-
-    
+  const doMath = (btn) => {
     const math = {
       '+': (x, y) => { return x + y },
       '-': (x, y) => { return x - y },
       '*': (x, y) => { return x * y },
       '/': (x, y) => { return x / y }
     }
-    
+
     let solution = 0
 
+    if (memUpdated) {
+
+      solution = math[btn](parseInt(previousNumber), parseInt(currentDisplay))
+      setAnswer(solution.toString())
+    }
+    return solution;
+  }
 
 
+  const operatorAction = (btn) => {
+    console.log(btn)
+    if(!operator){
+      setPreviousNumber(currentDisplay)
+    } else {
+      setPreviousNumber(doMath(operator))
+    }
+    setMemUpdated(true);
+    setScreenRefresh(true);
 
-    solution = math[btn](parseInt(previousNumber), parseInt(currentDisplay))
-
-    console.log(solution)
-    
-
-
-
-    const sum = () => {
-      if (memUpdated) {
-
-        return parseInt(previousNumber) + parseInt(currentDisplay)
-      }
+    if (btn !== '=') {
+      setOperator(btn)
+      console.log('opertaor state', operator)
     }
 
-    const diff = () => {
-      if (memUpdated) {
-
-        return parseInt(previousNumber) - parseInt(currentDisplay)
-      }
+    if(btn === '=') {
+      doMath(operator)
+      setCurrentDisplay(answer)
     }
+
+    // doMath(btn)
+
+    // console.log('solution',solution)
+
+    // //equals
+    // //need to add a block so that it doesn't freak out when you hit it twice
+    // if (btn === operators[4]) {
+    //   sum && setCurrentDisplay(sum().toString());
+    //   // diff && setCurrentDisplay(diff().toString())
+    //   setPreviousNumber("0")
+    //   setMemUpdated(false)
+    // }
+
+
+    // const sum = () => {
+    //   if (memUpdated) {
+
+    //     return parseInt(previousNumber) + parseInt(currentDisplay)
+    //   }
+    // }
+
+    // const diff = () => {
+    //   if (memUpdated) {
+
+    //     return parseInt(previousNumber) - parseInt(currentDisplay)
+    //   }
+    // }
 
     // const diff = () => {
     //   if(previousNumber !== "0") {
@@ -106,25 +130,18 @@ function App() {
     //   setPreviousNumber(diff.toString())
     // }
 
-    //subtraction
-    if (btn === operators[2]) {
-      console.log('diff', diff())
-    }
+    // //subtraction
+    // if (btn === operators[2]) {
+    //   console.log('diff', diff())
+    // }
 
-    //addition
-    if (btn === operators[3] && memUpdated) {
-      console.log('sum', sum());
-      setPreviousNumber(sum().toString());
-    }
+    // //addition
+    // if (btn === operators[3] && memUpdated) {
+    //   console.log('sum', sum());
+    //   setPreviousNumber(sum().toString());
+    // }
 
-    //equals
-    //need to add a block so that it doesn't freak out when you hit it twice
-    if (btn === operators[4]) {
-      sum && setCurrentDisplay(sum().toString());
-      // diff && setCurrentDisplay(diff().toString())
-      setPreviousNumber("0")
-      setMemUpdated(false)
-    }
+
 
 
 
@@ -139,6 +156,9 @@ function App() {
       setDisplayArr([0])
       setPreviousNumber("0")
       setScreenRefresh(false)
+      setMemUpdated(false)
+      setOperator('')
+      setAnswer('')
     }
 
     //make negative or positive
@@ -183,7 +203,8 @@ function App() {
         </div>
       </div>
 
-      <h1>Number Memory: {previousNumber}</h1>
+      <h1>Number Memory: {previousNumber} Current answer: {answer}</h1>
+      <h2>current operator: {operator}</h2>
 
     </div>
   );

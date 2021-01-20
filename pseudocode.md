@@ -23,3 +23,11 @@
 - funciton updateNumber(numState) {
     if(numstate == 0)
 }
+
+### What happens on each button click?
+
+1. You type in a number, this is constantly updating to be the current number
+2. You will choose an operator. This will set the operator state variable and also move the current number state to now equal the previous number state.
+3. Type another number. This will update the solution variable with an answer based on this number, previous number, and the currently chosen operator
+4. If another operator is chosen, it will replace the current operator and move the solution into the previous number state
+5. This will replace the current number with the solution number.
