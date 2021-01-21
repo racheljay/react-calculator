@@ -41,7 +41,7 @@ function App() {
       console.log('current display type', typeof currentDisplay)
       console.log(screenRefresh)
       
-      doMath(operator)
+      // doMath(operator)
       
     }
 
@@ -84,7 +84,10 @@ function App() {
 
     if(btn === '=') {
       doMath(operator)
-      setCurrentDisplay(answer)
+      setCurrentDisplay(previousNumber)
+      setOperator('')
+      setPreviousNumber("0")
+      setMemUpdated(false)
     }
 
     // doMath(btn)
@@ -173,7 +176,7 @@ function App() {
     <div className="container">
 
       <div className="row">
-        <div className="col-12 display-4 p-3 border">{currentDisplay}</div>
+        <div className="col-12 display-4 p-3 border">{!screenRefresh ? currentDisplay : answer ? answer : previousNumber }</div>
       </div>
 
       <div className="row">
