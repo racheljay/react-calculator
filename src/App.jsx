@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 function App() {
 
   const topRow = ['AC', '+/-', '%'];
-  const numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0, '.'];
+  const numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
   const operators = ['/', '*', '-', '+', "="];
 
   const [currentDisplay, setCurrentDisplay] = useState("0");
@@ -40,9 +40,7 @@ function App() {
 
       console.log('current display type', typeof currentDisplay)
       console.log(screenRefresh)
-      
-      // doMath(operator)
-      
+            
     }
 
 
@@ -84,7 +82,7 @@ function App() {
 
     if(btn === '=') {
       doMath(operator)
-      setCurrentDisplay(previousNumber)
+      // setCurrentDisplay(previousNumber)
       setOperator('')
       setPreviousNumber("0")
       setMemUpdated(false)
@@ -103,51 +101,6 @@ function App() {
     //   setMemUpdated(false)
     // }
 
-
-    // const sum = () => {
-    //   if (memUpdated) {
-
-    //     return parseInt(previousNumber) + parseInt(currentDisplay)
-    //   }
-    // }
-
-    // const diff = () => {
-    //   if (memUpdated) {
-
-    //     return parseInt(previousNumber) - parseInt(currentDisplay)
-    //   }
-    // }
-
-    // const diff = () => {
-    //   if(previousNumber !== "0") {
-    //    return parseInt(previousNumber) - parseInt(currentDisplay)
-    //   } else return sum()
-    // }
-
-    // let diff = if(previousNumber !== "0") {parseInt(previousNumber) - parseInt(currentDisplay)}
-
-    // console.log('sum', sum, 'diff', diff)
-    // console.log(memory, previousNumber, currentDisplay, current)
-
-    // if(btn === operators[2]) {
-    //   setPreviousNumber(diff.toString())
-    // }
-
-    // //subtraction
-    // if (btn === operators[2]) {
-    //   console.log('diff', diff())
-    // }
-
-    // //addition
-    // if (btn === operators[3] && memUpdated) {
-    //   console.log('sum', sum());
-    //   setPreviousNumber(sum().toString());
-    // }
-
-
-
-
-
   }
 
   const topRowAction = (btn) => {
@@ -165,11 +118,16 @@ function App() {
     }
 
     //make negative or positive
-    // if (btn === topRow[1]) {
-    //   if (currentDisplay !== 0) {
-    //     setCurrentDisplay(currentDisplay * -1)
-    //   }
-    // }
+    if (btn === topRow[1]) {
+      if (currentDisplay !== 0) {
+        setCurrentDisplay(currentDisplay * -1)
+      }
+    }
+
+    //percent button
+    if(btn === topRow[2]) {
+      setCurrentDisplay(currentDisplay * 0.01)
+    }
 
   }
   return (
@@ -206,7 +164,7 @@ function App() {
         </div>
       </div>
 
-      <h1>Number Memory: {previousNumber} Current answer: {answer}</h1>
+      <h1>Current Number: {currentDisplay} Number Memory: {previousNumber} Current answer: {answer}</h1>
       <h2>current operator: {operator}</h2>
 
     </div>
