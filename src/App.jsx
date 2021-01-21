@@ -43,7 +43,6 @@ function App() {
             
     }
 
-
   }
 
   const doMath = (btn) => {
@@ -134,29 +133,29 @@ function App() {
     <div className="container">
 
       <div className="row">
-        <div className="col-12 display-4 p-3 border">{!screenRefresh ? currentDisplay : answer ? answer : previousNumber }</div>
+        <div className="col-12 display-4 p-3 border border-dark bg-secondary text-light text-right">{!screenRefresh ? currentDisplay : answer ? answer : previousNumber }</div>
       </div>
 
       <div className="row">
-        <div className="col-9 border">
+        <div className="col-9 border border-dark bg-secondary text-center" id="btn-body">
           <div className="row">
 
             {topRow.map((item, index) => {
-              return <div key={index} className="col-4 p-2 border" onClick={() => topRowAction(item)} >{item}</div>
+              return <div key={index} className="col-4 p-2 border border-dark bg-dark text-light" id="top-row" onClick={() => topRowAction(item)} >{item}</div>
             })}
 
             {numbers.map((item, index) => {
-              return <div key={index} className="col-4 p-2 border" onClick={() => numBtnAction(item)}>{item}</div>
+              return <div key={index} className="col-4 p-2 border border-dark bg-secondary text-light" id="numbers" onClick={() => numBtnAction(item)}>{item}</div>
             })}
 
           </div>
         </div>
 
-        <div className="col-3 border">
+        <div className="col-3 border border-dark">
 
           <div className="row">
             {operators.map((item, index) => {
-              return <div key={index} className="col-12 p-2 border" onClick={() => operatorAction(item)}>{item}</div>
+              return <div key={index} className="col-12 p-2 border border-dark bg-warning text-white text-center" id="operators" onClick={() => operatorAction(item)}>{item}</div>
 
             })}
 
@@ -164,8 +163,8 @@ function App() {
         </div>
       </div>
 
-      <h1>Current Number: {currentDisplay} Number Memory: {previousNumber} Current answer: {answer}</h1>
-      <h2>current operator: {operator}</h2>
+      {/* <h1>Current Number: {currentDisplay} Number Memory: {previousNumber} Current answer: {answer}</h1>
+      <h2>current operator: {operator}</h2> */}
 
     </div>
   );
