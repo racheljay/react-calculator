@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 function App() {
 
   const topRow = ['AC', '+/-', '%'];
-  const numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0, '.'];
+  const numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
   const operators = ['/', '*', '-', '+', "="];
 
   const [currentDisplay, setCurrentDisplay] = useState("0");
@@ -40,11 +40,8 @@ function App() {
 
       console.log('current display type', typeof currentDisplay)
       console.log(screenRefresh)
-      
-      doMath(operator)
-      
+            
     }
-
 
   }
 
@@ -84,7 +81,10 @@ function App() {
 
     if(btn === '=') {
       doMath(operator)
-      setCurrentDisplay(answer)
+      // setCurrentDisplay(previousNumber)
+      setOperator('')
+      setPreviousNumber("0")
+      setMemUpdated(false)
     }
 
     // doMath(btn)
@@ -99,51 +99,6 @@ function App() {
     //   setPreviousNumber("0")
     //   setMemUpdated(false)
     // }
-
-
-    // const sum = () => {
-    //   if (memUpdated) {
-
-    //     return parseInt(previousNumber) + parseInt(currentDisplay)
-    //   }
-    // }
-
-    // const diff = () => {
-    //   if (memUpdated) {
-
-    //     return parseInt(previousNumber) - parseInt(currentDisplay)
-    //   }
-    // }
-
-    // const diff = () => {
-    //   if(previousNumber !== "0") {
-    //    return parseInt(previousNumber) - parseInt(currentDisplay)
-    //   } else return sum()
-    // }
-
-    // let diff = if(previousNumber !== "0") {parseInt(previousNumber) - parseInt(currentDisplay)}
-
-    // console.log('sum', sum, 'diff', diff)
-    // console.log(memory, previousNumber, currentDisplay, current)
-
-    // if(btn === operators[2]) {
-    //   setPreviousNumber(diff.toString())
-    // }
-
-    // //subtraction
-    // if (btn === operators[2]) {
-    //   console.log('diff', diff())
-    // }
-
-    // //addition
-    // if (btn === operators[3] && memUpdated) {
-    //   console.log('sum', sum());
-    //   setPreviousNumber(sum().toString());
-    // }
-
-
-
-
 
   }
 
@@ -162,40 +117,45 @@ function App() {
     }
 
     //make negative or positive
-    // if (btn === topRow[1]) {
-    //   if (currentDisplay !== 0) {
-    //     setCurrentDisplay(currentDisplay * -1)
-    //   }
-    // }
+    if (btn === topRow[1]) {
+      if (currentDisplay !== 0) {
+        setCurrentDisplay(currentDisplay * -1)
+      }
+    }
+
+    //percent button
+    if(btn === topRow[2]) {
+      setCurrentDisplay(currentDisplay * 0.01)
+    }
 
   }
   return (
     <div className="container">
 
       <div className="row">
-        <div className="col-12 display-4 p-3 border">{currentDisplay}</div>
+        <div className="col-12 display-4 p-3 border border-dark bg-secondary text-light text-right">{!screenRefresh ? currentDisplay : answer ? answer : previousNumber }</div>
       </div>
 
       <div className="row">
-        <div className="col-9 border">
+        <div className="col-9 border border-dark bg-secondary text-center" id="btn-body">
           <div className="row">
 
             {topRow.map((item, index) => {
-              return <div key={index} className="col-4 p-2 border" onClick={() => topRowAction(item)} >{item}</div>
+              return <div key={index} className="col-4 p-2 border border-dark bg-dark text-light" id="top-row" onClick={() => topRowAction(item)} >{item}</div>
             })}
 
             {numbers.map((item, index) => {
-              return <div key={index} className="col-4 p-2 border" onClick={() => numBtnAction(item)}>{item}</div>
+              return <div key={index} className="col-4 p-2 border border-dark bg-secondary text-light" id="numbers" onClick={() => numBtnAction(item)}>{item}</div>
             })}
 
           </div>
         </div>
 
-        <div className="col-3 border">
+        <div className="col-3 border border-dark">
 
           <div className="row">
             {operators.map((item, index) => {
-              return <div key={index} className="col-12 p-2 border" onClick={() => operatorAction(item)}>{item}</div>
+              return <div key={index} className="col-12 p-2 border border-dark bg-warning text-white text-center" id="operators" onClick={() => operatorAction(item)}>{item}</div>
 
             })}
 
@@ -203,8 +163,8 @@ function App() {
         </div>
       </div>
 
-      <h1>Number Memory: {previousNumber} Current answer: {answer}</h1>
-      <h2>current operator: {operator}</h2>
+      {/* <h1>Current Number: {currentDisplay} Number Memory: {previousNumber} Current answer: {answer}</h1>
+      <h2>current operator: {operator}</h2> */}
 
     </div>
   );
